@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Planning App</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        /* Section styles */
+        section {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+
+        /* Event Creation Form */
+        .event-form input, .event-form textarea, .event-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .event-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Guest List */
+        .guest-list ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .guest-list li {
+            background-color: #f9f9f9;
+            margin-bottom: 5px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Budget Management */
+        .budget-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .budget-table th, .budget-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Media Queries for Mobile Responsiveness */
+        @media (max-width: 768px) {
+            header {
+                font-size: 16px;
+            }
+
+            section {
+                margin: 10px;
+                padding: 15px;
+            }
+
+            .event-form input, .event-form select, .event-form button {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Event Planning App</h1>
+        <p>Manage your events easily, from invitations to budget management.</p>
+    </header>
+
+    <!-- Event Creation Section -->
+    <section>
+        <div class="section-title">Create an Event</div>
+        <form class="event-form" id="eventForm">
+            <label for="eventName">Event Name:</label>
+            <input type="text" id="eventName" placeholder="Enter event name" required>
+
+            <label for="eventLocation">Location:</label>
+            <input type="text" id="eventLocation" placeholder="Enter event location" required>
+
+            <label for="eventDate">Date:</label>
+            <input type="date" id="eventDate" required>
+
+            <label for="eventTime">Time:</label>
+            <input type="time" id="eventTime" required>
+
+            <label for="eventDescription">Description:</label>
+            <textarea id="eventDescription" rows="4" placeholder="Describe the event" required></textarea>
+
+            <button type="submit">Create Event</button>
+        </form>
+    </section>
+
+    <!-- Guest List Section -->
+    <section class="guest-list">
+        <div class="section-title">Guest List</div>
+        <ul id="guestList">
+            <!-- Guest list will appear here -->
+        </ul>
+        <button onclick="addGuest()">Add Guest</button>
+    </section>
+
+    <!-- Budget Management Section -->
+    <section>
+        <div class="section-title">Budget Management</div>
+        <table class="budget-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Estimated Cost</th>
+                    <th>Actual Cost</th>
+                </tr>
+            </thead>
+            <tbody id="budgetTable">
+                <!-- Budget items will be added here -->
+            </tbody>
+        </table>
+        <button onclick="addBudgetItem()">Add Budget Item</button>
+    </section>
+
+    <!-- Event Updates Section -->
+    <section>
+        <div class="section-title">Event Updates</div>
+        <textarea id="eventUpdate" placeholder="Post updates about the event..." rows="4"></textarea>
+        <button onclick="postUpdate()">Post Update</button>
+        <div id="updates"></div>
+    </section>
+
+    <script>
+        // Event Creation Form Handler
+        document.getElementById('eventForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Event created successfully!');
+            document.getElementById('eventForm').reset();
+        });
+
+        // Guest List Functionality
+        function addGuest() {
+            const guestName = prompt('Enter guest name:');
+            if (guestName) {
+                const guestList = document.getElementById('guestList');
+                const li = document.createElement('li');
+                li.textContent = guestName;
+                guestList.appendChild(li);
+            }
+        }
+
+        // Budget Management Functionality
+        function addBudgetItem() {
+            const item = prompt('Enter budget item name:');
+            const estimatedCost = prompt('Enter estimated cost for this item:');
+            const actualCost = prompt('Enter actual cost for this item:');
+            if (item && estimatedCost && actualCost) {
+                const table = document.getElementById('budgetTable');
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item}</td>
+                    <td>$${estimatedCost}</td>
+                    <td>$${actualCost}</td>
+                `;
+                table.appendChild(row);
+            }
+        }
+
+        // Event Updates Functionality
+        function postUpdate() {
+            const updateText = document.getElementById('eventUpdate').value;
+            if (updateText) {
+                const updatesDiv = document.getElementById('updates');
+                const newUpdate = document.createElement('div');
+                newUpdate.textContent = updateText;
+                updatesDiv.appendChild(newUpdate);
+                document.getElementById('eventUpdate').value = ''; // Clear the textarea
+            }
+        }
+    </script>
+
+</body>
+</html>
